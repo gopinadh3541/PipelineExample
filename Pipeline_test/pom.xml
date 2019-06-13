@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.aep.testdemo</groupId>
+	<artifactId>BankExample</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>BankExample Maven Webapp</name>
+	
+	
+	
+<distributionManagement>
+    <repository>
+      <id>aep-release</id>
+      <name>AEP Release</name>
+      <url>http://abci-prod:8082/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>aep-snapshot</id>
+      <name>AEP Snapshot</name>
+      <url>http://abci-prod:8082/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement> 
+
+	<!--Checking -->
+	<dependencies>
+	    <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    	<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+<dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.17</version>
+</dependency>
+
+	</dependencies>
+	<build>
+		<finalName>BankExample</finalName>
+	</build>
+
+  <profiles>
+        <profile>
+            <id>deploy to weblogic</id>
+            <activation>
+                <property>
+                    <name>deploy.to.weblogic</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.oracle.weblogic</groupId>
+                        <artifactId>weblogic-maven-plugin</artifactId>
+                        <version>10.3.4</version>
+                        <configuration>
+                            <adminurl>t3://${wl.host}:${wl.port}</adminurl>
+                            <targets>${wl.targets}</targets>
+                            <user>${wl.username}</user>
+                            <password>${wl.password}</password>
+                            <upload>true</upload>
+                            <remote>true</remote>
+                            <verbose>true</verbose>
+                            <name>BankExample</name>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>deploy latest build</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <action>deploy</action>
+                                    <!--<source>*/*.war</source>-->
+		<!--<source>C:/jenkins_installpath/workspace/Bank_appl1/target/BankExample.war    ./${wl.location}/${project.artifactId}</source>-->
+		<source>${wl.location}\${project.artifactId}.war</source>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>package for weblogic</id>
+            <activation>
+                <property>
+                    <name>package.for.weblogic</name>
+                </property>
+            </activation>
+        </profile>
+    </profiles>
+  
+  <properties>
+      <wl.host>itmplxtst1</wl.host>
+      <wl.port>7002</wl.port>
+      <wl.targets>ManagedServer1</wl.targets>
+	  <wl.repository>POC_1</wl.repository>
+	  <wl.source>Pipeline_test</wl.source>
+      <wl.location>\var\lib\jenkins</wl.location>
+	  <wl.username>s286103</wl.username>
+	  <wl.password>G0p1n2d420</wl.password>
+	  
+	 
+  </properties>
+	
+	
+	
+	</project>

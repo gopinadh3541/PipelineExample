@@ -1,0 +1,17 @@
+<!-- <suite name="softwaretestingmaterial">
+ <test name="testngTest">
+ <classes>
+ <class name="softwareTestingMaterial.STMTestNGClass" />
+ </classes>
+ </test>
+</suite> -->
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<suite name="Suite" parallel="false">
+  <test name="Test">
+    <classes>
+      <class name="com.tests.NewTest"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
