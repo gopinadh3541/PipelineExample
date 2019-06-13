@@ -5,41 +5,39 @@ node{
     }
 	 stage('Clean')
     {
-		withMaven(maven: 'ECD Maven 3.3.9 Linux')
-		{
-		sh "mvn -f Pipeline_test/pom.xml clean"
-		}
+		
+		
+		bat "mvn -f Pipeline_test/pom.xml clean"
+		
     }
   
     stage('Unit Test')
     {
-		withMaven(maven: 'ECD Maven 3.3.9 Linux')
-		{
-		sh "mvn -f Pipeline_test/pom.xml test"
-		}
+		
+		
+		bat "mvn -f Pipeline_test/pom.xml test"
+		
     }
    
    
     stage('Packaging')
     {
-        withMaven(maven: 'ECD Maven 3.3.9 Linux')
-		{
-		sh "mvn -f Pipeline_test/pom.xml install"
-		}
+        
+		bat "mvn -f Pipeline_test/pom.xml install"
+		
     }
 	stage('Publish')
 	{
 	
-		withMaven(maven: 'ECD Maven 3.3.9 Linux')
-		{
-			sh "mvn -f Pipeline_test/pom.xml clean deploy"
-		}
+		
+			//bat "mvn -f Pipeline_test/pom.xml clean deploy"
+		
 		//nexusArtifactUploader artifacts: [[artifactId: 'BankExample', classifier: '', file: './Java-Pipeline-test/Pipeline_test/target/BankExample.war', type: 'war']], credentialsId: '', groupId: 'com.aep.testdemo', nexusUrl: 'abci-prod:8082/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'http://abci-prod:8082/nexus', version: '1.0'
 		
 	}
-	stage('Download')
+stage('Download')
 	{
-		sh '''#!/bin/sh
+	/*	bat '''#!/bin/sh
 
 cd /var/lib/jenkins
 
@@ -63,7 +61,7 @@ echo "http://vmnaldcas138:8084/nexus/content/repositories/snapshots/com/aep/test
 ln -sf BankExamle-$(Version)-single.war BankExample-single.war 
 fi
 '''
-
+*/
 	}
    
   
@@ -76,23 +74,19 @@ fi
    stage('Deploy')
    {
    
-    withMaven(maven: 'ECD Maven 3.3.9 Linux')
-	{
-		//sh "mvn -f Pipeline_test/pom.xml deploy"
 		
-	sh "mvn -f Pipeline_test/pom.xml package -Ddeploy.to.weblogic -Ddeploy.for.weblogic"
+	//bat "mvn -f Pipeline_test/pom.xml package -Ddeploy.to.weblogic -Ddeploy.for.weblogic"
 	
 
-}
+
    }
  
 	stage('Selenium Testing')
 	{
 	
-	withMaven(maven: 'ECD Maven 3.3.9 Linux')
-		{
-		sh "mvn -f SeleniumTest/pom.xml test"
-		}
+	
+		bat "mvn -f SeleniumTest/pom.xml test"
+		
 	
 	}
 	
