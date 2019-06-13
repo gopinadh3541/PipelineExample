@@ -68,7 +68,7 @@ stage('Download')
 	
 	stage(' Sending for Scan ')
 	{
-		build 'Test_IBMScan'
+		build 'Appl_Web'
 	}
  
    
