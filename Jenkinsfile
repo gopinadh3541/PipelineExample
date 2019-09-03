@@ -1,13 +1,16 @@
 node{
-   stage('Checkout')
-    {
-        checkout scm
-    }
+	
 	
 	stage('Checkout1')
 	{
 		checkout 'https://github.com/gopinadh3541/Example.git'
 	}
+	
+   stage('Checkout')
+    {
+        checkout scm
+    }
+	
 	
 	 stage('Clean')
     {
